@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="">
+  
+  <head>
+    <title>凑单</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimum-scale=1.0, maximum-scale=1.0,width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/clipboard.js/2.0.4/clipboard.min.js"></script>
+    <style type="text/css">body { background: #eee; font-size: 14px; } .scenograph { padding: 16px 16px 0; text-align: center;} .drugsword { margin: 14px; margin-top: 16px; text-align: center; } .medicine-bag { background: white; border: 1px dashed #fb6a65; padding: .5rem; border-radius: 5px; } .icopy { background: #fb6a65; border-radius: 5px; color: white; font-size: 14px; margin: 16px auto; padding: 10px; margin-bottom: 2px; } .nomen-proprium { font-size: 12px; text-align: left; color: #fb6a65; } </style></head>
+  
+  <body>
+	<div class="drugsword">
+	  <div class="medicine-bag">
+		<div>
+		  <div id="nomen-proprium" class="nomen-proprium">下单：
+			<span id="np"></span></div>
+		</div>
+	  </div>
+	  <div type="button" data-clipboard-text="" class="icopy" id="icopy">复制口令</div>
+	  </div>
+    <div class="drugsword tkltwo">
+      <div class="medicine-bag">
+        <div>
+          <div id="nomen-proprium" class="nomen-proprium">凑单(2个商品购物车内合并付款后退掉凑单)：
+            <span id="np2"></span></div>
+        </div>
+      </div>
+      <div type="button" data-clipboard-text="" class="icopy" id="icopy2">复制口令</div>
+    </div>
+	<div class="scenograph">
+    <img id="type-bimg" src="" style="max-width:80%;">
+	</div>
+    <script>
+	function getQueryVariable(variable) {
+        var query = decodeURIComponent(window.location.search.substring(1));
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+          var pair = vars[i].split("=");
+          if (pair[0] == variable) {
+            return unescape(pair[1]);
+          }
+        }
+        return (false);
+      }
+	  var tklbtntxt = "复制口令"
+      //复制文本
+      var clipboard = new ClipboardJS('#icopy');
+      clipboard.on('success',
+      function(e) {
+        if (e.trigger.disabled == false || e.trigger.disabled == undefined) {
+          e.trigger.innerHTML = "复制成功，打开【手tao】领券";
+          e.trigger.style.backgroundColor = "#78bd33";
+          e.trigger.disabled = true;
+          setTimeout(function() {
+            e.trigger.innerHTML = tklbtntxt;
+            e.trigger.style.backgroundColor = "#fb6a65";
+            e.trigger.disabled = false;
+          },
+          1000);
+        }
+      });
+      clipboard.on('error',
+      function(e) {
+        e.trigger.innerHTML = "复制失败,请手动复制";
+        e.trigger.style.backgroundColor = "#b5b4b4";
+      });
+
+      $(function() {
+        var np = getQueryVariable("word");
+        np = "1￥" + np + "￥/";
+        $("#icopy").attr("data-clipboard-text", np);
+
+        $("#np").text(np);
+      });
+      //复制文本
+      var clipboard2 = new ClipboardJS('#icopy2');
+      clipboard2.on('success',
+      function(e) {
+        if (e.trigger.disabled == false || e.trigger.disabled == undefined) {
+          e.trigger.innerHTML = "复制成功，打开【手tao】购买";
+          e.trigger.style.backgroundColor = "#78bd33";
+          e.trigger.disabled = true;
+          setTimeout(function() {
+            e.trigger.innerHTML = "复制口令";
+            e.trigger.style.backgroundColor = "#fb6a65";
+            e.trigger.disabled = false;
+          },
+          1000);
+        }
+      });
+      clipboard2.on('error',
+      function(e) {
+        e.trigger.innerHTML = "复制失败,请手动复制";
+        e.trigger.style.backgroundColor = "#b5b4b4";
+      });
+
+      $(function() {
+        var np = getQueryVariable("word2");
+        np = "1￥" + np + "￥/";
+        $("#icopy2").attr("data-clipboard-text", np);
+        $("#np2").text(np);
+        var old_pic = getQueryVariable("image");
+        $("#type-bimg").attr('src', old_pic);
+      });</script>
+  </body>
+
+</html>
